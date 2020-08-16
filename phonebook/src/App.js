@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import peopleService from './services/persons'
 import Person from './components/Person'
+import Notification from './components/Notification'
+import './index.css'
 
 
 
@@ -9,6 +11,7 @@ const App = () => {
   const [ numbers, setNumbers ] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
 
   const hook = () => {
@@ -49,6 +52,13 @@ const App = () => {
          .then(response=> {
            console.log(response)
          })
+          setErrorMessage(
+          `Successfully added!`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 3000)
+
     }
 
     setNewName('')
@@ -83,6 +93,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <form onSubmit= {addName}>
         <div>
           name: <input value={newName} onChange={handleNameChange}></input>
